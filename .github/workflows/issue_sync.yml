@@ -26,3 +26,23 @@
 #         TARGET_REPO: my-private-repo # 私有仓库名
 #       run: |
 #         python .github/sync_issues.py ${{ github.event.issue.number }} $TARGET_REPO "${{ github.event.action }}"
+name: Issue Synchronization
+
+on:
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled]
+
+jobs:
+  sync_issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Sync Issue to Repositories
+        uses: ilubimu/sync-issues-action@main
+        with:
+          source-repo: ${{ github.repository }}
+          issue-number: ${{ github.event.issue.number }}
+          github-token: ${{ secrets.ISSUES_SYNC }}
+          target-repos: |
+            ilubimu/KHTC
