@@ -39,7 +39,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Sync Issue to Repositories
-        uses: ilubimu/sync-issues-action@main
+        uses: ./.github/actions/sync-issues
         with:
           source-repo: ${{ github.repository }}
           issue-number: ${{ github.event.issue.number }}
