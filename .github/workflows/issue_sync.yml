@@ -73,4 +73,5 @@ jobs:
       - name: Run sync script
         env:
           GH_PAT: ${{ secrets.ISSUES_SYNC }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
         run: python ./.github/workflows/sync_script.py
