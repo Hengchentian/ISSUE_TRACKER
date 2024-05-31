@@ -26,23 +26,49 @@
 #         TARGET_REPO: my-private-repo # 私有仓库名
 #       run: |
 #         python .github/sync_issues.py ${{ github.event.issue.number }} $TARGET_REPO "${{ github.event.action }}"
-name: Issue Synchronization
+
+
+# name: Issue Synchronization
+
+# on:
+#   issues:
+#     types: [opened, edited, closed, reopened, labeled, unlabeled]
+
+# jobs:
+#   sync_issues:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+#       - name: Sync Issue to Repositories
+#         uses: ./.github/actions/sync-issues
+#         with:
+#           source-repo: ${{ github.repository }}
+#           issue-number: ${{ github.event.issue.number }}
+#           github-token: ${{ secrets.ISSUES_SYNC }}
+#           target-repos: |
+#             ilubimu/KHTC
+
+
+name: Sync Issues to Private Repositories
 
 on:
   issues:
-    types: [opened, edited, closed, reopened, labeled, unlabeled]
+    types: [opened, edited, closed, reopened]
 
 jobs:
   sync_issues:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Sync Issue to Repositories
-        uses: ./.github/actions/sync-issues
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
-          source-repo: ${{ github.repository }}
-          issue-number: ${{ github.event.issue.number }}
-          github-token: ${{ secrets.ISSUES_SYNC }}
-          target-repos: |
-            ilubimu/KHTC
+          python-version: '3.8'
+      - name: Install dependencies
+        run: pip install requests
+      - name: Run sync script
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: python ./.github/workflows/sync_script.py
