@@ -1,0 +1,5 @@
+# @ilubimu owns everything in this repository
+* @ilubimu
+# extra protect for .github
+# /.github/CODEOWNERS @ilubimu
+/.github/ @ilubimu
