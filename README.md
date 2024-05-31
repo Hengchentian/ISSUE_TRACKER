@@ -24,3 +24,6 @@ To trace all issues or approval suggestions for automatically tool sets
 * Others
 
 ***
+
+## Continue Reading
+- [简体中文](README.zh-Hans.md)
