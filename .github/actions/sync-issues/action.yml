@@ -1,0 +1,20 @@
+# This is the action metadata file, action.yml, located in .github/actions/sync-issues/action.yml
+
+name: 'Sync Issues Action'
+description: 'Synchronizes issues across multiple repositories'
+inputs:
+  github-token:
+    description: 'GitHub token with access to the repositories'
+    required: true
+  source-repo:
+    description: 'The repository where the issue originates'
+    required: true
+  issue-number:
+    description: 'The number of the issue to sync'
+    required: true
+  target-repos:
+    description: 'The target repositories to sync the issue to'
+    required: true
+runs:
+  using: 'node12'
+  main: 'index.js'
