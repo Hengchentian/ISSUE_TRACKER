@@ -1,0 +1,28 @@
+name: Sync Issues to Private Repos
+
+on:
+  issues:
+    types: [opened, edited, closed, reopened, labeled, unlabeled] # 根据需要调整触发条件
+
+jobs:
+  sync_issue:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+      
+    - name: Install Dependencies
+      run: pip install requests
+      
+    - name: Sync Issue to Private Repo
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # 用于公共仓库操作
+        PRIVATE_REPO_PAT: ${{ secrets.PRIVATE_REPO_ACCESS_TOKEN }} # 存储的私有仓库PAT
+        TARGET_REPO: my-private-repo # 私有仓库名
+      run: |
+        python .github/sync_issues.py ${{ github.event.issue.number }} $TARGET_REPO "${{ github.event.action }}"
