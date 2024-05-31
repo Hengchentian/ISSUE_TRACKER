@@ -72,5 +72,5 @@ jobs:
         run: pip install requests
       - name: Run sync script
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_PAT: ${{ secrets.ISSUES_SYNC }}
         run: python ./.github/workflows/sync_script.py
