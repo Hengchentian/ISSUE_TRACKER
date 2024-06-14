@@ -77,5 +77,5 @@ issue_body = event_payload['issue']['body']
 
 # Example usage
 issue_data = {'title': issue_title, 'body': issue_body}
-response = sync_issue('ilubimu/KHTC', issue_data)
+response = sync_issue('ilubimu/testtrace', issue_data)
 print(response.json())
